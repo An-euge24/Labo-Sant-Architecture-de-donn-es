@@ -1,0 +1,11 @@
+# Fichiers sensibles — ne jamais committer sur GitHub
+.env
+
+# Fichiers Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Fichiers système
+.DS_Store
+Thumbs.db
