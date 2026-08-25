@@ -1,0 +1,62 @@
+id,name,dosage,unit,category
+M0001,Doliprane,500 mg,comprimé,Antalgique
+M0002,Doliprane,1000 mg,comprimé,Antalgique
+M0003,Efferalgan,500 mg,comprimé effervescent,Antalgique
+M0004,Dafalgan,500 mg,gélule,Antalgique
+M0005,Ibuprofène,400 mg,comprimé,Anti-inflammatoire
+M0006,Ibuprofène,200 mg,comprimé,Anti-inflammatoire
+M0007,Kétoprofène,100 mg,gélule,Anti-inflammatoire
+M0008,Amoxicilline,500 mg,gélule,Antibiotique
+M0009,Amoxicilline,1 g,comprimé,Antibiotique
+M0010,Augmentin,1 g,comprimé,Antibiotique
+M0011,Céfuroxime,250 mg,comprimé,Antibiotique
+M0012,Azithromycine,250 mg,comprimé,Antibiotique
+M0013,Clarithromycine,500 mg,comprimé,Antibiotique
+M0014,Doxycycline,100 mg,comprimé,Antibiotique
+M0015,Ciprofloxacine,500 mg,comprimé,Antibiotique
+M0016,Spasfon,80 mg,comprimé,Antispasmodique
+M0017,Spasfon,80 mg,suppositoire,Antispasmodique
+M0018,Débridat,100 mg,comprimé,Antispasmodique
+M0019,Météospasmyl,1 dose,gélule,Antispasmodique
+M0020,Paracétamol,500 mg,suppositoire,Antalgique
+M0021,Paracétamol,1 g,comprimé effervescent,Antalgique
+M0022,Levothyrox,75 µg,comprimé,Hormone thyroïdienne
+M0023,Levothyrox,100 µg,comprimé,Hormone thyroïdienne
+M0024,Euthyral,1 dose,comprimé,Hormone thyroïdienne
+M0025,Metformine,850 mg,comprimé,Antidiabétique
+M0026,Metformine,1 g,comprimé,Antidiabétique
+M0027,Januvia,100 mg,comprimé,Antidiabétique
+M0028,Jardiance,25 mg,comprimé,Antidiabétique
+M0029,Oméprazole,20 mg,gélule,Antiulcéreux
+M0030,Ésoméprazole,40 mg,comprimé,Antiulcéreux
+M0031,Pantoprazole,40 mg,comprimé,Antiulcéreux
+M0032,Atorvastatine,10 mg,comprimé,Hypolipémiant
+M0033,Atorvastatine,20 mg,comprimé,Hypolipémiant
+M0034,Pravastatine,20 mg,comprimé,Hypolipémiant
+M0035,Rosuvastatine,10 mg,comprimé,Hypolipémiant
+M0036,Ramipril,5 mg,comprimé,Antihypertenseur
+M0037,Ramipril,10 mg,comprimé,Antihypertenseur
+M0038,Amlodipine,5 mg,comprimé,Antihypertenseur
+M0039,Amlodipine,10 mg,comprimé,Antihypertenseur
+M0040,Losartan,50 mg,comprimé,Antihypertenseur
+M0041,Bisoprolol,5 mg,comprimé,Antihypertenseur
+M0042,Ventoline,100 µg/dose,aérosol,Bronchodilatateur
+M0043,Sérétide,250 µg/dose,aérosol,Bronchodilatateur
+M0044,Pulmicort,200 µg/dose,aérosol,Bronchodilatateur
+M0045,Xanax,0.5 mg,comprimé,Anxiolytique
+M0046,Xanax,0.25 mg,comprimé,Anxiolytique
+M0047,Lexomil,6 mg,comprimé,Anxiolytique
+M0048,Valium,5 mg,comprimé,Anxiolytique
+M0049,Stilnox,10 mg,comprimé,Hypnotique
+M0050,Morphine,10 mg,comprimé LP,Opioïde
+M0051,Morphine,30 mg,comprimé LP,Opioïde
+M0052,Oxycodone,10 mg,comprimé LP,Opioïde
+M0053,Tramadol,50 mg,gélule,Opioïde
+M0054,Kardégic,75 mg,poudre,Antiplaquettaire
+M0055,Plavix,75 mg,comprimé,Antiplaquettaire
+M0056,Lovenox,4000 UI,seringue,Anticoagulant
+M0057,Previscan,20 mg,comprimé,Anticoagulant
+M0058,Furosémide,40 mg,comprimé,Diurétique
+M0059,Lasilix,40 mg,comprimé,Diurétique
+M0060,Zyprexa,10 mg,comprimé,Antipsychotique
+M0061,Risperdal,2 mg,comprimé,Antipsychotique
