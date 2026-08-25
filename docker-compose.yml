@@ -1,0 +1,141 @@
+# docker-compose.yml — Session 2
+# Lance 6 services : PostgreSQL, MongoDB, pgAdmin, Mongo Express, Python Ingestor, Portainer
+
+services:
+
+  # ════════════════════════════════════════
+  # SERVICE 1 : PostgreSQL (base SQL)
+  # ════════════════════════════════════════
+  postgres:
+    image: postgres:15
+    container_name: postgres
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data  # persistance des données
+    networks:
+      - labo_network
+    ports:
+      - "5432:5432"
+    healthcheck:
+      # Vérifie que PostgreSQL est prêt à accepter des connexions
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 10s   # vérifie toutes les 10 secondes
+      timeout: 5s     # abandonne si pas de réponse en 5s
+      retries: 5      # 5 tentatives avant de déclarer le service "unhealthy"
+
+  # ════════════════════════════════════════
+  # SERVICE 2 : pgAdmin (interface PostgreSQL)
+  # ════════════════════════════════════════
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD}
+    ports:
+      - "5050:80"
+    networks:
+      - labo_network
+    depends_on:
+      postgres:
+        condition: service_healthy  # attend que PostgreSQL soit vraiment prêt
+
+  # ════════════════════════════════════════
+  # SERVICE 3 : MongoDB (base NoSQL)
+  # ════════════════════════════════════════
+  mongodb:
+    image: mongo:6
+    container_name: mongodb
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
+    volumes:
+      - mongo_data:/data/db  # persistance des documents JSON
+    networks:
+      - labo_network
+    ports:
+      - "27017:27017"
+    healthcheck:
+      # Vérifie que MongoDB est prêt à accepter des connexions
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ════════════════════════════════════════
+  # SERVICE 4 : Mongo Express (interface MongoDB)
+  # ════════════════════════════════════════
+  mongo-express:
+    image: mongo-express
+    container_name: mongo-express
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: ${MONGO_USER}
+      ME_CONFIG_MONGODB_ADMINPASSWORD: ${MONGO_PASSWORD}
+      ME_CONFIG_MONGODB_SERVER: mongodb  # nom du service Docker, pas localhost
+      ME_CONFIG_BASICAUTH_USERNAME: ${MONGO_EXPRESS_USER}
+      ME_CONFIG_BASICAUTH_PASSWORD: ${MONGO_EXPRESS_PASSWORD}
+    ports:
+      - "8081:8081"
+    networks:
+      - labo_network
+    depends_on:
+      mongodb:
+        condition: service_healthy  # attend que MongoDB soit vraiment prêt
+
+  # ════════════════════════════════════════
+  # SERVICE 5 : Python Ingestor
+  # ════════════════════════════════════════
+  ingestor:
+    build: ./app               # construit l'image depuis le Dockerfile dans app/
+    container_name: ingestor
+    environment:
+      PYTHONUNBUFFERED: 1 
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_HOST: postgres  # nom du service Docker
+      MONGO_USER: ${MONGO_USER}
+      MONGO_PASSWORD: ${MONGO_PASSWORD}
+      MONGO_HOST: mongodb      # nom du service Docker
+      DATA_SIZE: ${DATA_SIZE}  # small / medium / large
+    volumes:
+      - ./data:/app/data       # monte le dossier data/ de ton ordi dans le conteneur
+    networks:
+      - labo_network
+    depends_on:
+      postgres:
+        condition: service_healthy  # attend que PostgreSQL soit prêt
+      mongodb:
+        condition: service_healthy  # attend que MongoDB soit prêt
+
+  # ════════════════════════════════════════
+  # SERVICE 6 : Portainer (monitoring)
+  # ════════════════════════════════════════
+  portainer:
+    image: portainer/portainer-ce
+    container_name: portainer
+    ports:
+      - "9000:9000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock  # accès au Docker de l'hôte
+      - portainer_data:/data
+    networks:
+      - labo_network
+
+# ════════════════════════════════════════
+# VOLUMES
+# ════════════════════════════════════════
+volumes:
+  postgres_data:    # données PostgreSQL
+  mongo_data:       # documents MongoDB
+  portainer_data:   # données Portainer
+
+# ════════════════════════════════════════
+# RÉSEAU
+# ════════════════════════════════════════
+networks:
+  labo_network:
+    driver: bridge  # réseau isolé pour la communication entre conteneurs
